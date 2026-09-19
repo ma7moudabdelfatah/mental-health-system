@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الأمانة العامة للصحة النفسية وعلاج الإدمان - نظام المترددين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<!-- Header -->
+<div class="flag-strip"></div>
+<div class="flag-strip-gold"></div>
+<header class="top-header" id="topHeader" style="display:none">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-wrap">
+        <img src="assets/logo.png" alt="شعار الأمانة العامة" class="logo" onerror="this.onerror=null;this.src='assets/logo.jpg';this.onerror=function(){this.style.display='none';document.getElementById('logoFallback').style.display='flex'}">
+      </div>
+      <div id="logoFallback" class="logo-fallback" style="display:none">
+        <span class="eagle">🦅</span>
+      </div>
+      <div class="title-wrap">
+        <h1>جمهورية مصر العربية — وزارة الصحة والسكان</h1>
+        <h2>الأمانة العامة للصحة النفسية و<span>علاج الإدمان</span></h2>
+        <p>General Secretariat of Mental Health and Addiction Treatment</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="user-info" id="userInfo"></div>
+      <button class="btn btn-logout" id="btnLogout">تسجيل خروج</button>
+    </div>
+  </div>
+  <nav class="nav" id="mainNav"></nav>
+</header>
+
+<!-- LOGIN PAGE -->
+<section id="page-login" class="page active">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="assets/logo.png" alt="logo" onerror="this.onerror=null;this.src='assets/logo.jpg'">
+        <h1>جمهورية مصر العربية</h1>
+        <h2>وزارة الصحة والسكان</h2>
+        <p style="color:#ffe8a3;font-weight:800;margin-top:4px">الأمانة العامة للصحة النفسية وعلاج الإدمان</p>
+        <p>نظام متابعة المترددين الشهري — الرسمي</p>
+      </div>
+      <form id="loginForm" class="form">
+        <div class="form-group">
+          <label>اسم المستخدم</label>
+          <input type="text" id="loginUsername" placeholder="ادخل اسم المستخدم" required>
+        </div>
+        <div class="form-group">
+          <label>كلمة المرور</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <div id="loginError" class="error-msg"></div>
+        <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button>
+        <div class="login-hint">
+          <p>للتجربة:</p>
+          <div class="hint-grid">
+            <div><b>الرئيسي:</b> admin / admin123</div>
+            <div><b>مستشفى العباسية:</b> abbasiya / 123</div>
+            <div><b>مستشفى حلوان:</b> helwan / 123</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="page-dashboard" class="page">
+  <div class="container">
+    <div class="hero-official">
+      <img src="assets/logo.png" class="hero-logo" alt="logo" onerror="this.src='assets/logo.svg'">
+      <img src="assets/logo.png" class="watermark" alt="">
+      <div class="hero-text">
+        <h2>الأمانة العامة للصحة النفسية وعلاج الإدمان</h2>
+        <h3>وزارة الصحة والسكان — جمهورية مصر العربية</h3>
+        <p>نظام المتابعة والإحصاء الشهري لأعداد المترددين بجميع مستشفيات الصحة النفسية. يتم التجميع التلقائي في الحساب الرئيسي مع التقارير والرسوم البيانية الرسمية.</p>
+        <span class="hero-badge">● النظام الرسمي — تحديث شهري</span>
+      </div>
+    </div>
+    <h2 class="page-title">لوحة التحكم</h2>
+    <div class="stats-grid" id="statsGrid"></div>
+    <div class="cards-grid">
+      <div class="card">
+        <h3>آخر التسجيلات</h3>
+        <div id="recentEntries"></div>
+      </div>
+      <div class="card">
+        <h3>تنبيهات</h3>
+        <div id="alertsBox"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA ENTRY -->
+<section id="page-entry" class="page">
+  <div class="container">
+    <h2 class="page-title">تسجيل عدد المترددين الشهري</h2>
+    <div class="card">
+      <form id="entryForm" class="form-grid">
+        <div class="form-group" id="hospitalSelectGroup">
+          <label>المستشفى</label>
+          <select id="entryHospital" required></select>
+        </div>
+        <div class="form-group">
+          <label>الشهر</label>
+          <input type="month" id="entryMonth" required>
+        </div>
+        <div class="form-group">
+          <label>عدد المترددين</label>
+          <input type="number" id="entryCount" min="0" placeholder="مثال: 1250" required>
+        </div>
+        <div class="form-group">
+          <label>ملاحظات (اختياري)</label>
+          <input type="text" id="entryNotes" placeholder="ملاحظات">
+        </div>
+        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+      </form>
+      <div id="entryMsg" class="success-msg"></div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3>سجل الإدخالات الخاصة بي</h3>
+      <div class="table-wrap">
+        <table class="tbl" id="myEntriesTable">
+          <thead><tr><th>المستشفى</th><th>الشهر</th><th>العدد</th><th>تاريخ التسجيل</th><th>إجراء</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORTS -->
+<section id="page-reports" class="page">
+  <div class="container">
+    <h2 class="page-title">التقارير والرسوم البيانية - التجميع في الحساب الرئيسي</h2>
+    <div class="card filters">
+      <div class="filter-row">
+        <div class="form-group">
+          <label>من شهر</label>
+          <input type="month" id="reportFrom">
+        </div>
+        <div class="form-group">
+          <label>إلى شهر</label>
+          <input type="month" id="reportTo">
+        </div>
+        <div class="form-group">
+          <label>المستشفى</label>
+          <select id="reportHospital"><option value="all">الكل</option></select>
+        </div>
+        <button class="btn btn-primary" id="btnGenerateReport">عرض التقرير</button>
+        <button class="btn btn-outline" id="btnExportCSV">تصدير Excel (CSV)</button>
+        <button class="btn btn-outline" onclick="window.print()">طباعة</button>
+      </div>
+    </div>
+
+    <div class="stats-grid" id="reportStats"></div>
+
+    <div class="cards-grid">
+      <div class="card chart-card">
+        <h3>إجمالي المترددين شهرياً (مجمع)</h3>
+        <canvas id="chartMonthly" height="260"></canvas>
+      </div>
+      <div class="card chart-card">
+        <h3>توزيع المترددين حسب المستشفى</h3>
+        <canvas id="chartHospital" height="260"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>الجدول المجمع - كل المستشفيات × الأشهر</h3>
+      <div class="table-wrap" id="aggregateTableWrap"></div>
+    </div>
+
+    <div class="card">
+      <h3>التفاصيل</h3>
+      <div class="table-wrap">
+        <table class="tbl" id="detailsTable">
+          <thead><tr><th>المستشفى</th><th>الشهر</th><th>العدد</th><th>بواسطة</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USERS - انشاء حساب -->
+<section id="page-users" class="page">
+  <div class="container">
+    <h2 class="page-title">إنشاء وإدارة الحسابات</h2>
+    <div class="card">
+      <h3>إضافة حساب جديد</h3>
+      <form id="userForm" class="form-grid">
+        <div class="form-group">
+          <label>اسم المستخدم *</label>
+          <input type="text" id="uUsername" placeholder="مثال: hospital_cairo" required>
+        </div>
+        <div class="form-group">
+          <label>كلمة المرور *</label>
+          <input type="text" id="uPassword" placeholder="123" required>
+        </div>
+        <div class="form-group">
+          <label>نوع الحساب *</label>
+          <select id="uRole" required>
+            <option value="hospital">حساب مستشفى</option>
+            <option value="admin">حساب رئيسي (أمانة عامة)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>اسم المستشفى / الجهة</label>
+          <input type="text" id="uHospital" placeholder="مثال: مستشفى العباسية">
+        </div>
+        <button type="submit" class="btn btn-primary">إنشاء الحساب</button>
+      </form>
+      <div id="userMsg" class="success-msg"></div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3>قائمة الحسابات</h3>
+      <div class="table-wrap">
+        <table class="tbl" id="usersTable">
+          <thead><tr><th>المستخدم</th><th>المستشفى</th><th>النوع</th><th>الحالة</th><th>إجراء</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERMISSIONS -->
+<section id="page-permissions" class="page">
+  <div class="container">
+    <h2 class="page-title">صفحة الصلاحيات - التحكم في ظهور الصفحات</h2>
+    <p class="muted">تحكم من هنا في الصفحات التي يراها كل نوع حساب. التغيير يُحفظ تلقائياً ويطبق فوراً على القائمة الجانبية.</p>
+    <div class="card">
+      <table class="tbl perm-tbl" id="permTable">
+        <thead><tr><th>الصفحة</th><th>الحساب الرئيسي (Admin)</th><th>حساب المستشفى</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div style="margin-top:16px;display:flex;gap:10px">
+        <button class="btn btn-primary" id="btnSavePerm">حفظ الصلاحيات</button>
+        <button class="btn btn-outline" id="btnResetPerm">استعادة الافتراضي</button>
+        <span id="permMsg" class="success-msg"></span>
+      </div>
+      <div class="alert info" style="margin-top:16px">
+        <b>ملاحظة:</b> صفحة تسجيل الدخول متاحة للجميع. صفحة الصلاحيات وإنشاء الحسابات محجوبة افتراضياً عن حسابات المستشفيات.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-official">
+  جميع الحقوق محفوظة © 2026 — وزارة الصحة والسكان — الأمانة العامة للصحة النفسية وعلاج الإدمان — General Secretariat of Mental Health and Addiction Treatment
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
